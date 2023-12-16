@@ -12,13 +12,14 @@ echo "Script started executing at $TIME"
 echo "checking root user are not.....?"
 
 validate(){
-if [ $1 -ne 0 ]
-then
-    echo -e "Error:: $2 install $R failue occurs$N"
-    exit 1
-else
-    echo -e "$2 installed $G successfully ....!$N"
-fi
+
+ if [ $1 -ne 0 ]
+    then
+        echo -e "$2 ... $R FAILED $N"
+        exit 1
+    else
+        echo -e "$2 ... $G SUCCESS $N"
+    fi
 }
 ID=$(id -u)
 
@@ -29,3 +30,21 @@ then
 else
     echo -e "you are a $G root user $N"
 fi
+
+cp mongodb.repo /etc/yum.repos.d/mongo.repo &>> $LOG
+validate $? "copied mongodb repo"
+
+dnf install mongodb-org -y &>> $LOG
+validate $? "Installing MongoDB"
+
+systemctl enable mongod &>> $LOG
+validate $? "Enabling Mongodb"
+
+systemctl start mongod &>> $LOG
+validate $? "starting Mongodb"
+
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>> $LOG
+validate $? "Remote access to MongoDB"
+
+systemctl restart mongod $>> $LOG
+validate $? "Restarting mongodb"
