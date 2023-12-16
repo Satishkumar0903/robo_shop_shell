@@ -25,7 +25,7 @@ ID=$(id -u)
 if [ $ID -ne 0 ] &>> $LOG
 then
     echo -e "you are not a $R root user $N"
-    exit1
+    exit 1
 else
     echo -e "you are a $G root user $N"
 fi
