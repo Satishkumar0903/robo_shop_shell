@@ -5,7 +5,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-MONGDB_HOST=mongodb.daws76s.online
+MONGDB_HOST=mongodb.devops-practice.site
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
@@ -68,7 +68,7 @@ npm install  &>> $LOGFILE
 VALIDATE $? "Installing dependencies"
 
 # use absolute, because catalogue.service exists there
-cp /home/centos/robo_shop-shell/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
+cp /home/centos/robo_shop_shell/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
 
 VALIDATE $? "Copying catalogue service file"
 
@@ -84,7 +84,7 @@ systemctl start catalogue &>> $LOGFILE
 
 VALIDATE $? "Starting catalogue"
 
-cp /home/centos/robo_shop-shell/mongodb.repo /etc/yum.repos.d/mongodb.repo
+cp /home/centos/robo_shop_shell/mongodb.repo /etc/yum.repos.d/mongodb.repo
 
 VALIDATE $? "copying mongodb repo"
 
